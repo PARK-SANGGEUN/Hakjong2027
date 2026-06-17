@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모두의 학종 가이드북 분석 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;font-family:'Noto Sans KR',sans-serif;background:#F6F3EE;color:#1A1612;}
+
+/* ═══ COVER ═══ */
+#cover{position:fixed;inset:0;background:#F6F3EE;overflow-y:auto;z-index:100;}
+
+.cov-bar{
+  background:#fff;border-bottom:2px solid #DDD8CF;
+  padding:20px 64px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:10;
+}
+.cov-logo{
+  font-family:'Noto Serif KR',serif;
+  font-size:1.3rem;font-weight:700;color:#1A1612;
+}
+.cov-logo em{color:#8B3A14;font-style:normal;}
+.cov-sig{
+  font-family:'Dancing Script',cursive;
+  font-size:1.1rem;color:#8B3A14;
+  position:relative;overflow:hidden;display:inline-block;
+}
+.shine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(105deg,transparent 35%,rgba(180,100,30,.5)50%,transparent 65%);animation:shine 3.5s 1.5s ease-in-out infinite;}
+@keyframes shine{0%{left:-100%}55%,100%{left:150%}}
+
+.cov-body{padding:72px 64px 48px;max-width:1200px;}
+.cov-tag{
+  font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:#8B3A14;margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;
+}
+.cov-tag::before{content:'';width:40px;height:1.5px;background:#8B3A14;display:block;}
+
+.cov-h1{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(2.4rem,5.5vw,4.2rem);
+  font-weight:700;line-height:1.15;
+  color:#1A1612;margin-bottom:28px;
+}
+
+.cov-desc{
+  font-size:clamp(1rem,1.8vw,1.2rem);
+  color:#5A5248;
+  line-height:1.9;
+  max-width:780px;
+  margin-bottom:56px;
+  padding-left:22px;
+  border-left:4px solid #8B3A14;
+}
+.cov-desc strong{color:#1A1612;}
+
+.grid-label{
+  font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:#7A7060;margin-bottom:18px;
+}
+.uni-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:12px;
+  margin-bottom:48px;
+}
+.uc{
+  background:#fff;border:2px solid #E8E2D8;border-radius:14px;
+  padding:22px 20px 18px;cursor:pointer;
+  transition:all .18s;position:relative;overflow:hidden;
+}
+.uc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:#8B3A14;transform:scaleX(0);transform-origin:left;transition:transform .2s;}
+.uc:hover{border-color:#8B3A14;box-shadow:0 6px 24px rgba(139,58,20,.13);transform:translateY(-3px);}
+.uc:hover::after{transform:scaleX(1);}
+.uc-n{font-size:.65rem;font-weight:700;color:#C8C0B4;margin-bottom:5px;letter-spacing:.1em;}
+.uc-name{font-size:1rem;font-weight:700;color:#1A1612;line-height:1.3;margin-bottom:4px;}
+.uc-tag{font-size:.7rem;color:#8B3A14;font-weight:500;}
+
+.cov-foot{
+  border-top:1px solid #DDD8CF;padding:20px 64px;
+  font-size:.75rem;color:#8A8070;line-height:1.7;
+}
+
+/* ═══ DETAIL (2-panel) ═══ */
+#detail{position:fixed;inset:0;display:none;background:#F6F3EE;}
+
+/* top bar */
+.det-bar{
+  position:absolute;top:0;left:0;right:0;height:60px;z-index:50;
+  background:rgba(246,243,238,.96);backdrop-filter:blur(10px);
+  border-bottom:2px solid #DDD8CF;
+  display:flex;align-items:center;gap:16px;padding:0 28px;
+}
+.btn-back{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 18px;border-radius:8px;
+  border:2px solid #DDD8CF;background:#fff;
+  font-size:.85rem;font-family:'Noto Sans KR',sans-serif;font-weight:500;
+  cursor:pointer;color:#3D3830;transition:all .13s;white-space:nowrap;
+}
+.btn-back:hover{border-color:#8B3A14;color:#8B3A14;}
+.det-name{
+  font-family:'Noto Serif KR',serif;
+  font-size:1.15rem;font-weight:700;color:#1A1612;flex:1;
+}
+.det-name small{font-size:.78rem;color:#7A7060;font-family:'Noto Sans KR',sans-serif;font-weight:400;margin-left:8px;}
+.btn-nav{
+  padding:8px 16px;border-radius:8px;border:2px solid #DDD8CF;background:#fff;
+  font-size:.82rem;font-family:'Noto Sans KR',sans-serif;
+  cursor:pointer;color:#3D3830;transition:all .13s;white-space:nowrap;
+}
+.btn-nav:hover{border-color:#8B3A14;color:#8B3A14;}
+.btn-nav:disabled{opacity:.3;cursor:default;}
+
+/* 2-panel */
+.det-panels{
+  position:absolute;top:60px;left:0;right:0;bottom:0;
+  display:flex;
+}
+
+/* LEFT tab panel */
+.left-panel{
+  width:280px;flex-shrink:0;
+  background:#fff;border-right:2px solid #DDD8CF;
+  overflow-y:auto;
+}
+.left-panel::-webkit-scrollbar{width:4px;}
+.left-panel::-webkit-scrollbar-thumb{background:#DDD8CF;}
+.lp-head{
+  padding:24px 20px 16px;
+  border-bottom:1px solid #EDE9E2;
+  position:sticky;top:0;background:#fff;z-index:2;
+}
+.lp-uni{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;color:#1A1612;margin-bottom:2px;}
+.lp-eng{font-size:.72rem;color:#7A7060;}
+
+.tab-btn{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:16px 20px;border:none;background:none;
+  cursor:pointer;text-align:left;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:.9rem;font-weight:500;color:#5A5248;
+  border-bottom:1px solid #EDE9E2;
+  transition:all .13s;position:relative;
+}
+.tab-btn:hover{background:#F6F3EE;color:#1A1612;}
+.tab-btn.active{
+  background:#FDF5F0;color:#8B3A14;font-weight:700;
+}
+.tab-btn.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:#8B3A14;border-radius:0 3px 3px 0;
+}
+.tab-icon{font-size:1.2rem;flex-shrink:0;}
+.tab-label{line-height:1.3;}
+
+/* RIGHT content */
+.right-panel{
+  flex:1;overflow-y:auto;
+  padding:64px 80px 80px;
+}
+.right-panel::-webkit-scrollbar{width:5px;}
+.right-panel::-webkit-scrollbar-thumb{background:#DDD8CF;border-radius:3px;}
+
+/* content pages */
+.cp{display:none;}
+.cp.active{display:block;animation:fadeSlide .3s ease;}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:none;}}
+
+/* ── content styles — BIG ── */
+.cp-eyebrow{
+  font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#8B3A14;margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;
+}
+.cp-eyebrow::after{content:'';flex:1;height:1px;background:#EDE9E2;}
+
+.cp-h1{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;line-height:1.2;
+  color:#1A1612;margin-bottom:8px;
+}
+.cp-h2{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:700;color:#1A1612;
+  margin-bottom:24px;line-height:1.25;
+}
+.cp-sub{font-size:1rem;color:#5A5248;margin-bottom:36px;line-height:1.7;}
+
+/* overview meta cards */
+.meta-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:36px;}
+.meta-c{
+  background:#fff;border:2px solid #EDE9E2;border-radius:12px;padding:18px 20px;
+  border-left:4px solid #1B4F72;
+}
+.mc-lbl{font-size:.72rem;font-weight:700;color:#1B4F72;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.mc-val{font-size:.95rem;color:#1A1612;line-height:1.6;}
+
+/* eval bars */
+.eval-wrap{background:#fff;border:2px solid #EDE9E2;border-radius:14px;padding:32px 36px;margin-bottom:28px;}
+.eval-title{font-size:.78rem;font-weight:700;color:#7A7060;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;}
+.eval-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+.eval-row:last-child{margin-bottom:0;}
+.eval-lbl{font-size:1rem;color:#1A1612;width:200px;flex-shrink:0;}
+.eval-track{flex:1;height:10px;background:#EDE9E2;border-radius:5px;overflow:hidden;}
+.eval-fill{height:100%;border-radius:5px;background:#8B3A14;}
+.eval-pct{font-size:.9rem;font-weight:700;color:#8B3A14;width:44px;text-align:right;flex-shrink:0;}
+.eval-note{margin-top:18px;padding-top:16px;border-top:1px solid #EDE9E2;font-size:.9rem;color:#5A5248;line-height:1.65;}
+
+/* talent */
+.talent-list{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+.t-item{
+  display:flex;align-items:flex-start;gap:16px;
+  background:#fff;border:2px solid #EDE9E2;border-radius:12px;
+  padding:20px 22px;font-size:1rem;color:#1A1612;line-height:1.7;
+}
+.t-num{
+  font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:700;
+  color:#8B3A14;flex-shrink:0;width:28px;
+}
+
+/* checklist */
+.cl-group{margin-bottom:28px;}
+.cl-title{
+  font-size:1rem;font-weight:700;color:#1A1612;
+  background:#F0EBE4;border-radius:8px;padding:14px 18px;
+  border-left:4px solid #1B4F72;margin-bottom:2px;
+}
+.cl-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:15px 18px;border-bottom:1px solid #EDE9E2;background:#fff;
+  font-size:.95rem;color:#1A1612;line-height:1.7;
+}
+.cl-item:last-child{border-bottom:none;border-radius:0 0 8px 8px;}
+.cl-dot{color:#8B3A14;font-size:1rem;flex-shrink:0;margin-top:2px;}
+
+/* orig quote */
+.orig-q{
+  background:#FFFBF0;border:2px solid #D4B44A;border-radius:12px;
+  padding:24px 28px;margin-bottom:18px;
+}
+.oq-lbl{font-size:.72rem;font-weight:700;color:#B8860B;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+.oq-text{font-size:.98rem;color:#1A1612;line-height:1.8;}
+
+/* cases */
+.cases-wrap{display:flex;flex-direction:column;gap:16px;margin-bottom:32px;}
+.case-c{border-radius:14px;padding:24px 28px;border:2px solid;}
+.case-c.good{background:#EFF7EF;border-color:#B2D8B8;}
+.case-c.bad{background:#F7EFEF;border-color:#D8B8B8;}
+.case-typ{font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;}
+.good .case-typ{background:rgba(45,106,79,.12);color:#2D6A4F;}
+.bad .case-typ{background:rgba(139,32,32,.12);color:#8B2020;}
+.case-tit{font-size:1.1rem;font-weight:700;color:#1A1612;margin-bottom:10px;line-height:1.35;}
+.case-body{font-size:.95rem;color:#1A1612;line-height:1.75;}
+.case-src{font-size:.75rem;color:#7A7060;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,.08);}
+
+/* big quote */
+.big-q{
+  background:#F0EBE4;border-left:5px solid #8B3A14;
+  border-radius:0 14px 14px 0;padding:32px 36px;margin:32px 0;
+}
+.bq-open{font-family:Georgia,serif;font-size:4rem;color:#8B3A14;opacity:.25;line-height:.8;margin-bottom:12px;}
+.bq-text{font-family:'Noto Serif KR',serif;font-size:1.2rem;color:#1A1612;line-height:1.8;font-style:italic;}
+.bq-src{font-size:.8rem;color:#8B3A14;font-weight:700;margin-top:14px;font-style:normal;}
+
+/* faq */
+.faq-item{border-bottom:2px solid #EDE9E2;}
+.faq-q{
+  width:100%;text-align:left;background:none;border:none;
+  padding:22px 0;cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:1.05rem;font-weight:700;color:#1A1612;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  transition:color .13s;
+}
+.faq-q:hover{color:#8B3A14;}
+.faq-arr{font-size:.7rem;color:#7A7060;transition:transform .2s;flex-shrink:0;}
+.faq-item.open .faq-arr{transform:rotate(180deg);}
+.faq-a{display:none;padding-bottom:22px;font-size:.98rem;color:#1A1612;line-height:1.85;}
+.faq-item.open .faq-a{display:block;}
+.faq-hl{background:#EAF0F7;border-left:4px solid #1B4F72;border-radius:0 8px 8px 0;padding:14px 18px;margin-top:14px;font-size:.93rem;color:#1B4F72;line-height:1.65;}
+
+/* warn */
+.warn{background:#FDF5F0;border:2px solid #D4B0A0;border-radius:12px;padding:18px 22px;font-size:.9rem;color:#1A1612;line-height:1.7;margin-top:28px;}
+.warn strong{color:#8B3A14;display:block;margin-bottom:4px;}
+
+/* no-content */
+.no-content{font-size:1rem;color:#7A7060;line-height:1.7;padding:24px;background:#fff;border:2px solid #EDE9E2;border-radius:12px;}
+
+@media(max-width:860px){
+  .left-panel{width:220px;}
+  .right-panel{padding:40px 32px 60px;}
+  .cp-h1{font-size:1.7rem;}
+  .eval-lbl{width:140px;}
+  .cov-body,.cov-bar,.cov-foot{padding-left:24px;padding-right:24px;}
+}
+@media(max-width:640px){
+  .det-panels{flex-direction:column;}
+  .left-panel{width:100%;height:200px;border-right:none;border-bottom:2px solid #DDD8CF;display:flex;overflow-x:auto;overflow-y:hidden;}
+  .lp-head{display:none;}
+  .tab-btn{flex-shrink:0;width:auto;border-bottom:none;border-right:1px solid #EDE9E2;padding:12px 16px;}
+  .right-panel{padding:28px 20px 60px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<div id="cover">
+  <div class="cov-bar">
+    <div class="cov-logo">모두의 <em>학종 가이드북 분석</em> 2027</div>
+    <div class="cov-sig">Copyright @ All Teachers<div class="shine"></div></div>
+  </div>
+
+  <div class="cov-body">
+    <div class="cov-tag">2027학년도 · 17개 대학 · 공식 가이드북 원문 기반</div>
+    <h1 class="cov-h1">선생님들의<br>가이드북 읽는 시간을<br>아껴드립니다</h1>
+    <p class="cov-desc">
+      수백 페이지의 대학별 공식 가이드북을 직접 읽지 않아도 됩니다.<br>
+      각 대학 입학사정관이 실제로 확인하는 평가 기준·체크리스트·긍정·주의 사례를<br>
+      상담 현장에서 바로 펼쳐볼 수 있도록 한 권에 정리했습니다.<br>
+      <strong>가이드북 원문에 없는 내용은 단 한 줄도 수록하지 않았습니다.</strong>
+    </p>
+
+    <div class="grid-label">상담할 대학을 선택하세요</div>
+    <div class="uni-grid" id="uniGrid"></div>
+  </div>
+
+  <div class="cov-foot">
+    ※ 성신여대·이화여대는 PDF가 이미지 스캔 형식으로 텍스트 추출 불가하여 제외하였습니다. 경기대는 전공자율선택제 안내 가이드북으로 학종 평가기준 내용이 없어 제외하였습니다.<br>
+    ※ 최신 전형 세부사항은 각 대학 입학처 공식 홈페이지와 수시 모집요강을 반드시 확인하세요.
+  </div>
+</div>
+
+<!-- ═══ DETAIL ═══ -->
+<div id="detail">
+  <div class="det-bar">
+    <button class="btn-back" onclick="goCover()">← 대학 목록</button>
+    <div class="det-name" id="det-name"><small id="det-sub"></small></div>
+    <button class="btn-nav" id="btnPrev" onclick="prevUni()">◀ 이전</button>
+    <button class="btn-nav" id="btnNext" onclick="nextUni()">다음 ▶</button>
+  </div>
+
+  <div class="det-panels">
+    <div class="left-panel" id="leftPanel">
+      <div class="lp-head">
+        <div class="lp-uni" id="lp-uni"></div>
+        <div class="lp-eng" id="lp-eng"></div>
+      </div>
+      <!-- tabs injected by JS -->
+    </div>
+    <div class="right-panel" id="rightPanel">
+      <!-- content injected by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+const TABS = [
+  {id:'overview', icon:'📋', label:'개요 & 전형 안내'},
+  {id:'eval',     icon:'📊', label:'평가 요소 & 비율'},
+  {id:'talent',   icon:'🎯', label:'인재상 & 선발 방향'},
+  {id:'check',    icon:'✅', label:'평가 기준 체크리스트'},
+  {id:'orig',     icon:'📜', label:'가이드북 원문'},
+  {id:'cases',    icon:'💬', label:'긍정 · 주의 사례'},
+  {id:'faq',      icon:'❓', label:'상담 Q&A'},
+];
+
+const UNI = [
+{id:'snu',num:'01',name:'서울대학교',eng:'Seoul National University',tag:'지역균형 · 일반 · 기회균형',
+badges:['지역균형전형','일반전형','기회균형특별전형(사회통합)'],
+meta:[
+ {l:'평가 방식',v:'28명 전임 + 110명 위촉사정관 / 4단계 다수 독립평가'},
+ {l:'교과 성적 반영',v:'공식 산출 없음 — 항목별 비율 없음 — 전체 정성평가'},
+ {l:'지역균형 면접',v:'서류 기반 10분 내외 / 기본 학업소양 확인'},
+ {l:'일반전형 면접',v:'제시문 활용 30~45분 면접 및 구술고사'},
+],
+eval:[{l:'학업역량',p:50},{l:'학업태도',p:30},{l:'학업 외 소양',p:20}],
+evalNote:'항목별 반영 비율은 없음 — 위 수치는 중요도를 시각화한 것입니다. (서울대 가이드북 명시)',
+
+forms:[
+  {name:"모든 전형 — 평가 방식", bars:[]}
+],talent:[
+ '학교 교육과정을 성실히 이수하고 학업역량이 우수한 학생',
+ '학교생활에서 적극적이고 진취적인 태도를 보인 학생',
+ '글로벌 리더로 성장할 수 있는 자질을 지닌 학생',
+ '다양한 교육적·사회적·문화적 배경과 경험을 지닌 학생',
+ '사회적 약자에 대한 배려심과 공동체 의식을 가진 학생',
+],
+checks:[
+ {g:'학업역량 평가 기준 — 가이드북 원문',items:[
+  '교과 및 학업 활동 내용에서 우수한 학업 성취가 고르게 나타나는가?',
+  '단순 암기 수준 이상의 깊이 있는 이해를 바탕으로 한 지식을 갖추었는가?',
+  '습득한 지식을 적절히 활용한 경험이 있는가?',
+  '자신의 성취를 점검하고 더 필요한 공부가 무엇인지 고민한 경험이 있는가?',
+  '노력을 통해 성장한 모습은 어떠한가?',
+ ]},
+ {g:'학업태도 평가 기준 — 가이드북 원문',items:[
+  '적극적이며 지속적으로 노력하였는가?',
+  '배움을 위해 주어진 교육자원을 적극적으로 활용하였는가?',
+  '스스로 알고자 하는 호기심과 도전적 태도가 나타나는가?',
+  '진로 탐색을 위한 적극적인 태도가 확인되는가?',
+ ]},
+ {g:'학업 외 소양 평가 기준 — 가이드북 원문',items:[
+  '바른 인성을 갖추려 노력하였는가?',
+  '학교생활을 통해 리더십을 발휘한 경험이 있는가? (임원 횟수가 아닌 역할 내용을 질적으로 판단)',
+  '공동체 의식을 지니고 있는가?',
+  '사회적 약자를 배려하고 도움을 주고자 하는 마음이 있는가?',
+ ]},
+],
+orig:[
+ {label:'교과 성적 평가 — 가이드북 원문',text:'교과 성적을 공식으로 수치화하여 기계적으로 반영하지 않습니다. 상이한 교육 환경과 교육과정에서 얻은 성취를 단순히 수치상으로 비교할 경우, 교과성취도는 지원자의 학업역량 수준을 판단하기 위한 정확한 정보가 될 수 없기 때문입니다. (서울대 가이드북 19p)'},
+ {label:'소수 수강 과목 — 가이드북 원문',text:'소수 학생이 선택한 과목이나 난도가 높은 과목을 이수하여 수치상 결과가 다소 나쁠 수 있지만 학생의 도전 정신과 호기심을 긍정적으로 평가한다면 도전하지 않은 학생에 비하여 더 좋은 평가를 할 수도 있습니다. 따라서 소규모 학교나 소수 학생들이 이수하는 과목을 수강하는 것이 서류평가에서 결코 불리하지 않습니다. (서울대 가이드북 19p)'},
+ {label:'세특 평가 — 가이드북 원문',text:'과학 교과 이론 수업에서는 최상위 수준의 성취를 보이지 못했던 학생이 실험 수업에서 실험 설계 능력, 문제 해결 능력 등의 우수성이 드러나는 경우, 수치화된 성적으로 드러나지 않는 학생의 우수성을 평가합니다. (서울대 가이드북 20p)'},
+ {label:'학교 환경 평가 — 가이드북 원문',text:'서울대학교가 평가하는 것은 학생들 개개인이 각자에게 주어진 기회를 얼마큼 스스로 적극적으로 활용하여 노력해 왔는지, 어떤 동기와 의지를 가지고 활동하였으며 그로부터 개인적으로 얼마큼의 성장을 이루었는지입니다. (서울대 가이드북 36p)'},
+],
+good:[
+ {t:'소수 수강 과목 선택',b:'소수 학생이 선택한 과목이나 난도가 높은 과목을 이수하여 수치상 결과가 다소 나쁠 수 있지만 학생의 도전 정신과 호기심을 긍정적으로 평가한다면 도전하지 않은 학생에 비하여 더 좋은 평가를 할 수도 있습니다.',src:'서울대 가이드북 19p'},
+ {t:'실험 수업에서 문제 설계 능력이 드러난 경우',b:'과학 교과 이론 수업에서는 최상위 수준의 성취를 보이지 못했던 학생이 실험 수업에서 실험 설계 능력, 문제 해결 능력 등의 우수성이 드러나는 경우 수치화된 성적으로 드러나지 않는 학생의 우수성을 평가합니다.',src:'서울대 가이드북 20p'},
+],
+bad:[
+ {t:'유리한 과목만 선택해 수치 관리',b:'오히려 좋은 성적을 받는 데 유리한 과목만 이수하여 결과적으로 수치만 좋게 받으려 한 경우에는 긍정적인 평가를 받지 못하는 경우도 있습니다.',src:'서울대 가이드북 FAQ'},
+ {t:'임원 경력 다수 + 실질 내용 없음',b:'임원 활동 경력이 많은 학생이 리더십이 있다고 판단하지 않으며, 횟수보다 맡은 역할과 활동 내용을 질적으로 판단합니다.',src:'서울대 가이드북'},
+],
+faq:[
+ {q:'성적이 꼭 향상되어야만 좋은 평가를 받나요?',a:'정해진 모습은 없습니다. 성적이 향상되면 떨어지는 것보다 긍정적인 평가를 받을 수 있지만, 고학년이 될수록 학생들의 과목 선택에 따른 동일과목 수강자가 적어진다는 점을 염두에 두고 평가합니다. 오히려 좋은 성적을 받는 데 유리한 과목만 이수하여 수치만 좋게 받으려 한 경우에는 긍정적인 평가를 받지 못하는 경우도 있습니다.',hl:''},
+ {q:'소수 인원 과목을 이수해서 석차등급이 낮아지면 불리한가요?',a:'무조건 불리한 것은 아닙니다. 단순히 등급수치만 고려하여 평가하지는 않습니다. 수강 인원 등을 고려하여 평가하므로 소수 학생이 이수한 과목 때문에 등급이 낮아졌다고 해서 불리한 것은 아닙니다.',hl:'오히려 학생이 자신의 진학 목표를 고려하여 소수 선택 과목을 이수하는 노력을 보일 때 긍정적인 평가를 받을 수도 있습니다.'},
+ {q:'동아리활동이 지원 모집단위와 반드시 일치해야 하나요?',a:'그렇지 않습니다. 동아리활동은 학생의 소양을 넓히는 기회입니다. 지원자가 선택한 동아리의 종류를 평가하는 것이 아니라 동아리활동을 통해 학생이 무엇을 배우고 어떻게 성장하였는지에 관심을 기울입니다.',hl:'따라서 동아리활동이 지원 모집단위와 일치해야 유리한 것은 아닙니다.'},
+ {q:'일반전형 면접은 어떻게 준비해야 하나요?',a:'단순 문제풀이나 암기 위주의 학습에서 벗어나 고등학교 교육과정 안에서 독서, 글쓰기, 토론, 발표, 과제 수행 등을 통해 자신의 역량을 꾸준히 함양하는 것이 중요합니다. 지역균형전형 면접은 학교생활기록부에 기록된 내용을 꼼꼼하게 검토하고 면접에 임하기를 바랍니다.',hl:''},
+],
+quote:'학생부종합전형을 대비하는 가장 좋은 방법은 학교 안에서 교육과정을 충실히 이수하면서 자신의 과거를 성찰하고 미래에 자신이 이루고자 하는 목표를 위해 끊임없이 노력하는 현재를 만들어 가는 것입니다.',
+quoteSrc:'서울대 가이드북'},
+
+{id:'yonsei',num:'02',name:'연세대학교',eng:'Yonsei University',tag:'활동우수형',
+badges:['활동우수형','기회균형'],
+meta:[{l:'전형 방식',v:'서류평가(70%) + 면접평가(30%)'},{l:'면접',v:'학교생활기록부 기반 제출서류 확인 면접'},{l:'수능최저',v:'없음 (활동우수형)'}],
+eval:[{l:'학업역량',p:40},{l:'진로역량',p:30},{l:'공동체역량',p:30}],
+evalNote:'학업역량·진로역량·공동체역량 3개 평가요소로 종합 정성평가합니다. 항목별 수치 비율은 가이드북에 명시되어 있지 않습니다. 서류평가(70%)+면접평가(30%) 방식. (연세대 가이드북)',
+
+forms:[
+  {name:"활동우수형 전형 방법", bars:[{l:"서류평가",p:70},{l:"면접평가",p:30}]}
+],talent:['학업역량: 대학 교육을 충실히 이수하는데 필요한 수학 능력','진로역량: 자신의 진로와 전공(계열)에 관한 탐색 노력과 준비 정도','공동체역량: 공동체의 일원으로서 갖춰야 할 바람직한 사고와 행동'],
+checks:[
+ {g:'학업역량 세부 평가 내용 — 가이드북 원문',items:['기본 교과목(국어, 수학, 영어, 사회/과학 등)의 교과성적은 적절한가?','예술·체육, 기술·가정/정보, 제2외국어 등의 교과성적은? 유난히 소홀한 과목이 있는가?','학기별/학년별 성적의 추이는 어떠한가?','3년간의 평균적 학업성취도 반영 + 성적 향상 정도(발전가능성) 함께 확인','수업과 과제수행 과정에서 주도적인 노력, 열의와 관심, 다양한 탐구 방법의 모색이 보이는가?']},
+ {g:'진로역량 세부 평가 내용 — 가이드북 원문',items:['전공(계열)과 관련된 과목을 적절하게 선택하고, 이수한 과목은 얼마나 되는가?','전공 관련 과목 이수를 위해 추가 노력을 하였는가? (공동교육과정, 온라인수업, 소인수과목 등)','선택과목(일반/진로)은 교과목 학습단계(위계)에 따라 이수하였는가?','전공 관련 과목의 석차등급/성취도, 원점수, 평균, 표준편차, 이수단위, 수강자수 등을 종합 고려','교과 활동이나 창의적 체험활동에서 전공(계열)에 대한 관심을 가지고 탐색한 경험이 있는가?']},
+ {g:'공동체역량 세부 평가 내용 — 가이드북 원문',items:['학교생활 속에서 나눔을 실천하고 생활화한 경험이 있는가?','교내 활동에서 자신이 맡은 역할에 최선을 다하려고 노력한 경험이 있는가?','자신이 속한 공동체가 정한 규칙과 규정을 준수하고 있는가?','학교폭력 가해자 등의 내용이 기재되어 있으면 평가에 반영될 수 있습니다.','공동체의 목표를 달성하기 위해 계획하고 실행을 주도한 경험이 있는가?']},
+],
+orig:[
+ {label:'진로역량 과목 선택 — 가이드북 원문',text:'학습 부담이나 석차등급의 유·불리 때문에 쉬운 과목을 선택하기보다 희망 전공(계열)에 맞는 도전적 선택이 긍정적 평가의 근거가 됩니다. 대학이 제공한 전공(계열) 분야의 교과 이수 권장 과목을 참고하여 전공별 또는 계열별 적절한 과목선택을 할 수 있습니다. (연세대 가이드북)'},
+ {label:'탐구력 평가 — 가이드북 원문',text:'수업내용에 대한 연계적 질문, 새로운 문제 해결 방법을 찾고자 하는 노력, 진로에 관련된 수업의 수강 등 다양한 탐구 활동에 대한 참여와 역량을 기르기 위한 관심의 확장이 긍정적인 평가의 근거가 됩니다. (연세대 가이드북)'},
+],
+good:[{t:'공동교육과정으로 전공 관련 과목 추가 이수',b:'학교가 개설하지 않아 핵심, 권장 과목을 이수할 수 없을 경우에는 공동교육과정 등 추가적인 개인적 학습 노력을 찾아볼 수 있습니다.',src:'연세대 가이드북'},{t:'학년이 올라갈수록 성적이 향상된 경우',b:'학기/학년별 성적의 변화도 함께 고려하여, 학문적 발전가능성과 성적의 향상정도를 통해 지원자의 성장을 확인할 수 있습니다.',src:'연세대 가이드북'}],
+bad:[{t:'쉬운 과목만 선택해 수치 관리',b:'학습 부담이나 석차등급의 유·불리 때문에 쉬운 과목을 선택하기보다 희망 전공(계열)에 맞는 도전적 선택이 긍정적 평가의 근거가 됩니다.',src:'연세대 가이드북'},{t:'특정 교과를 유난히 소홀히 한 경우',b:'예술·체육, 기술·가정/정보, 제2외국어/한문, 교양 등의 교과성적은 어느 정도인가? 유난히 소홀한 과목이 있는가? — 평가 지표에 명시적으로 포함합니다.',src:'연세대 가이드북'}],
+faq:[{q:'쉬운 과목을 선택해 성적을 관리하면 어떻게 평가되나요?',a:'학습 부담이나 석차등급의 유·불리 때문에 쉬운 과목을 선택하기보다 희망 전공(계열)에 맞는 도전적 선택이 긍정적 평가의 근거가 됩니다.',hl:'대학이 제공한 전공(계열) 분야의 교과 이수 권장 과목을 참고하여 전공별 또는 계열별 적절한 과목선택을 할 수 있습니다.'},{q:'학교폭력 기록이 있으면 어떻게 되나요?',a:'학교폭력 가해자 등의 내용이 기재되어 있으면 평가에 반영될 수 있습니다. 대부분의 학생들이 규칙과 규정을 준수하는 편이라 그렇지 않은 경우를 평가에 활용할 수 있습니다.',hl:''}],
+quote:'수강 등 다양한 탐구 활동에 대한 참여와 역량을 기르기 위한 관심의 확장이 긍정적인 평가의 근거가 됩니다.',
+quoteSrc:'연세대 가이드북 탐구력 항목'},
+
+{id:'kyunghee',num:'03',name:'경희대학교',eng:'Kyung Hee University',tag:'네오르네상스전형',
+badges:['네오르네상스전형','기회균형'],
+meta:[{l:'평가 척도',v:'탁월(S)→우수(A)→양호(B)→보통(C)→미흡(D)→미달(F) 6단계'},{l:'평가 방식',v:'입학사정관 2인 독립평가 / 가감점 활용'},{l:'학업역량 세부',v:'학업성취도 25% + 학업태도·탐구력 15%'},{l:'진로역량 세부',v:'전공 교과 이수 노력·성취도 25% + 진로 탐색 15%'}],
+eval:[{l:'학업역량',p:40},{l:'진로역량',p:40},{l:'공동체역량',p:20}],
+evalNote:'진로역량과 학업역량이 동등한 비중 40:40 — 경희대 가이드북',
+
+forms:[
+  {name:"네오르네상스전형 서류평가 비율", bars:[
+    {l:"학업성취도",p:25},
+    {l:"학업태도 및 탐구력",p:15},
+    {l:"전공(계열) 관련 교과 이수 노력 및 성취도",p:25},
+    {l:"진로 탐색 활동과 경험",p:15},
+    {l:"협업·소통능력·리더십",p:10},
+    {l:"나눔과 배려, 성실성과 규칙준수",p:10},
+  ]}
+],talent:['성찰하는 지성인 — 진취적 기상을 통해 지식의 가치를 성찰적으로 탐구하는 인재','창조하는 미래인 — 창의적 노력을 통해 전환의 미래 시대를 선도하는 도전적 인재','공존하는 세계인 — 건설적 협동을 통해 차이의 공존을 실현하는 사회가치 추구 인재'],
+checks:[
+ {g:'학업태도·탐구력 체크포인트 — 가이드북 원문',items:['교과에서 학습한 개념을 단순히 이해하는 수준에 머무르지 않고 다양한 맥락에 적용하고 확장해 나가는 학습 경험이 지속적으로 드러나는가?','탐구 과정에서 생성된 질문을 후속 학습으로 연결하는 자기주도적 학업 태도가 보이는가?','다양한 교과에서 습득한 지식을 유기적으로 연계하여 활용하는 융합적 사고력이 확인되는가?','창의적 체험활동에서도 동일한 학습 성향이 일관되게 나타나는가?']},
+ {g:'진로역량 체크포인트 — 가이드북 원문',items:['전공(계열) 관련 교과를 이수하기 위해 노력하였는가?','전공(계열) 관련 교과의 성취도는 어느 정도인가?','진로와 연계된 탐구 방향성이 확인되는가?','자료 기반의 비판적 사고력이 드러나는가?']},
+ {g:'공동체역량 체크포인트 — 가이드북 원문',items:['협업과 소통능력 — 팀원들과의 협업·소통하는 모습이나 활동에 주도적으로 임하는 적극적인 태도','나눔과 배려 — 학교생활 속에서 나눔을 실천하고 생활화한 경험','성실성과 규칙준수 — 맡은 역할에 대한 최선, 공동체 규칙 준수','리더십 — 공동체의 목표를 달성하기 위해 계획하고 실행을 주도한 경험']},
+],
+orig:[
+ {label:'학업태도·탐구력 평가포인트 원문 — 약과학과 사례',text:'지원자는 수학 교과에서는 삼각함수의 개념을 프로그램을 활용해 시각화하고, 변수 변화에 따른 그래프의 특성을 탐구함으로써 개념에 대한 구조적 이해를 심화하였습니다. 물리학에서는 운동 관련 개념을 그래프로 해석하고 이를 타인에게 설명하는 과정에서 개념을 정교화하였으며, 스스로의 오개념을 점검하고 수정하는 등 성찰적인 학습 태도를 보였습니다. 화학 교과에서는 평형 이동과 반응 조건 변화의 원리를 다양한 상황에 적용하고, 이를 의약품 및 실생활 사례와 연결하여 탐구함으로써 교과 지식의 활용과 확장 능력을 보여주었습니다. (경희대 가이드북 p.12)'},
+ {label:'인재상 원문',text:'경희가 찾는 인재는 자기 존중과 성찰을 바탕으로 탄탄한 학업 기초와 적극적인 참여 태도를 갖추고, 바른 품성으로 배려와 협력을 실천하며, 지원학과에 대한 열정으로 관련 활동을 꾸준히 수행해 온 학생입니다. (경희대 가이드북 p.4)'},
+],
+good:[{t:'교과 개념을 실생활·사회 맥락으로 확장',b:'수학 삼각함수를 프로그램으로 시각화, 물리학 개념을 타인에게 설명하며 정교화, 화학 평형 이동 원리를 의약품 사례와 연결 탐구. 스스로의 오개념을 점검·수정하는 성찰적 학습 태도.',src:'경희대 가이드북 p.12 평가포인트'},{t:'WHO·OECD 자료로 진로를 사회적 맥락에 연계',b:'진로활동에서 WHO와 OECD 자료를 활용해 의료 접근성과 정책 문제를 분석하고, 의료 윤리와 형평성에 대한 다양한 관점에서 탐구를 수행하는 등 자료 기반의 비판적 사고력과 진로와 연계된 탐구 방향성이 확인됩니다.',src:'경희대 가이드북 p.12'}],
+bad:[{t:'성취 결과만 있고 탐구 과정이 드러나지 않는 경우',b:'단순한 성취 결과를 넘어, 지적 호기심을 바탕으로 탐구를 지속하고 문제해결에 능동적으로 접근하는 학업 태도와 탐구력을 확인합니다.',src:'경희대 가이드북 p.12'}],
+faq:[{q:'진로역량이 학업역량과 비중이 같은 이유는?',a:'경희가 찾는 인재는 자기 존중과 성찰을 바탕으로 탄탄한 학업 기초와 적극적인 참여 태도를 갖추고, 바른 품성으로 배려와 협력을 실천하며, 지원학과에 대한 열정으로 관련 활동을 꾸준히 수행해 온 학생입니다. 두 역량이 모두 균형 있게 요구됩니다.',hl:''}],
+quote:'경희가 찾는 인재는 자기 존중과 성찰을 바탕으로 탄탄한 학업 기초와 적극적인 참여 태도를 갖추고, 바른 품성으로 배려와 협력을 실천하며, 지원학과에 대한 열정으로 관련 활동을 꾸준히 수행해 온 학생입니다.',
+quoteSrc:'경희대 가이드북 p.4'},
+
+{id:'dongguk',num:'04',name:'동국대학교',eng:'Dongguk University',tag:'Do Dream전형',
+badges:['Do Dream전형','기회균형','불교추천인재'],
+meta:[{l:'전형 방식',v:'1단계 서류100%(2.5~3.5배수) → 2단계 서류70%+면접30%'},{l:'수능최저',v:'없음'},{l:'면접',v:'2인 1조 / 수험생별 2회 / 10분 내외'},{l:'학생부 반영',v:'수상경력·자격증 대입 미반영'}],
+eval:[{l:'학업역량',p:30},{l:'전공적합성',p:30},{l:'인성·사회성',p:20},{l:'발전가능성',p:20}],
+evalNote:'출처: 동국대 가이드북',
+
+forms:[
+  {name:"Do Dream전형 전형방법", bars:[
+    {l:"1단계 서류종합평가",p:100},
+    {l:"2단계 — 1단계 성적",p:70},
+    {l:"2단계 — 면접평가",p:30},
+  ]}
+],talent:['Do Dream: 주도적인 고교생활을 바탕으로 진로에 대한 역량과 발전가능성을 보유한 인재','불교추천인재: 불교정신을 바탕으로 학업역량과 인성을 겸비한 인재','기회균형: 주어진 환경에서 전공분야 역량을 갖추기 위해 주도적으로 노력한 인재'],
+checks:[
+ {g:'동아리 활동 평가 포인트 — 가이드북 원문',items:['활동의 과정 및 태도 역시 평가요소','동아리원과의 협업·소통하는 모습이나 활동에 대해 주도적으로 임하는 적극적인 태도','전공과 관련된 활동뿐만 아니라 주도적인 탐구 역량, 공동체 내에서 역할 수행 능력과 협업 역량 확인','컴퓨터·AI학부 우수 사례: 전공 연관 동아리활동을 통해 학업역량 및 전공수학역량이 명확히 나타남']},
+ {g:'면접 평가 내용 — 가이드북 원문',items:['전공 관련 분야에 대한 관심도 및 이해도, 학업수학능력을 종합적으로 평가','면접태도, 공감능력, 의사소통능력, 수용능력을 종합적으로 평가','발전가능성: 문제해결능력, 목표에 대한 의지 및 열정, 진로계획 등','학생부 반영: 행동특성 및 종합의견, 세부능력 및 특기사항, 창의적 체험활동 반영']},
+],
+orig:[{label:'주도성 강조 — 가이드북 원문',text:'주도적이고 성실한 학교생활이 양질의 학생부를 만듭니다. 지원자의 학교생활을 보여주는 유일한 자료인 만큼 주도적이고 성실한 학교생활이 중요합니다. (동국대 가이드북)'}],
+good:[{t:'주도적 학교생활이 학생부에 드러난 경우',b:'주도적이고 성실한 학교생활이 양질의 학생부를 만듭니다. 지원자의 학교생활을 보여주는 유일한 자료인 만큼 주도적이고 성실한 학교생활이 중요합니다.',src:'동국대 가이드북'}],
+bad:[{t:'활동 결과만 있고 과정·태도가 없는 경우',b:'활동의 과정 및 태도 역시 평가요소가 되며, 동아리원과의 협업·소통하는 모습이나 활동에 대해 주도적으로 임하는 적극적인 태도를 통해서도 지원자의 역량을 확인할 수 있습니다.',src:'동국대 가이드북'}],
+faq:[{q:'AI 분석으로 합격 패턴을 공개한다고 하던데?',a:'동국대는 AI 분석 도구를 활용하여 합격자 학생부 패턴 분석 결과를 가이드북에 공개합니다. 전공 활동 유형별 패턴이 제공되므로 가이드북 원문을 직접 확인하는 것이 추가적으로 도움이 됩니다.',hl:''}],
+quote:'배움은 성취로, 경험은 경쟁력으로 이어지며 교실을 넘어 현장에서 학생의 가능성이 완성됩니다.',
+quoteSrc:'동국대 가이드북'},
+
+{id:'kookmin',num:'05',name:'국민대학교',eng:'Kookmin University',tag:'국민프런티어',
+badges:['국민프런티어전형','기회균형'],
+meta:[{l:'핵심 특징',v:'모집단위별 인재상·서류 평가 주안점이 학과별로 상세 수록'},{l:'활용법',v:'지원 학과 페이지를 반드시 확인 — 학과별 맞춤 상담 핵심'}],
+eval:[{l:'학업역량',p:40},{l:'전공적합성',p:35},{l:'인성',p:25}],
+evalNote:'출처: 국민대 가이드북',
+
+forms:[
+  {name:"국민프런티어전형 전형방법", bars:[
+    {l:"1단계 서류평가",p:100},
+    {l:"2단계 — 1단계 성적",p:70},
+    {l:"2단계 — 면접평가",p:30},
+  ]}
+],talent:['한국어문학부: 한국어와 한국문학에 대한 풍부한 관심 / 열린 마음으로 소통하며 탐구 정신','행정학과: 논리적 사고와 높은 문해력 / 독서를 통한 주제 심화 탐구 역량','중어중문학과: 제2외국어로 중국어 선택 여부 + 한자·중국어·중국문화 관련 활동 경험','영어영문학부: 우수한 영어 능력 + 다양한 분야 학업과 학교생활에 진취적·자기주도적 태도'],
+checks:[{g:'면접 유의사항 — 가이드북 원문',items:['학과명만이 아니라 국민대학교의 인재상과 전공의 커리큘럼을 이해하고 면접 유형 안내를 참고','질문의 의도에 맞게, 논리적으로, 자신의 생각을 솔직하게 표현하기','지원자가 희망하는 전공분야에 대한 기초지식을 알고 있는 범위에서 과장되지 않게 사실적인 답변','생각하지 못한 질문에도 시간을 가지고 침착하게 대답, 부적절한 행동이나 언어 사용 주의']},{g:'학과별 서류 평가 주안점 예시 — 가이드북 원문',items:['중어중문학과: 제2외국어로 중국어를 선택하고 열심히 공부했는지, 성적이 우수했는지 등을 중요하게 관찰','행정학과: 논리적 사고와 높은 문해력 / 독서를 통한 주제 심화 탐구 / 융합적·비판적·분석적 능력','정치외교학과: 민주시민으로서의 지성과 인품, 지도력을 겸비한 인재']}],
+orig:[{label:'면접 유의사항 — 가이드북 원문',text:'질문의 의도에 맞게, 논리적으로, 자신의 생각을 솔직하게 표현하기. 지원자가 희망하는 전공분야에 대한 기초지식을 알고 있는 범위에서 과장되지 않게 사실적인 답변이 이루어져야 합니다. (국민대 가이드북)'}],
+good:[{t:'지원 학과 특성에 맞는 교과 이수·활동',b:'국민대 가이드북에는 학과별 서류 평가 주안점이 매우 구체적으로 수록되어 있습니다. 상담 시 지원 학과 페이지를 반드시 함께 확인하여 학과별 맞춤 상담을 진행하세요.',src:'국민대 가이드북'}],
+bad:[{t:'학과 특성 파악 없이 일반적 활동만',b:'중어중문학과는 진로역량을 고려하기 위해 제2외국어로 중국어를 선택하고 열심히 공부했는지, 성적이 우수했는지 등을 중요하게 관찰합니다.',src:'국민대 가이드북'}],
+faq:[{q:'학과별로 보는 기준이 다른가요?',a:'네, 국민대 가이드북에는 모집단위별 인재상·졸업 후 진로·서류 평가 주안점이 학과별로 매우 구체적으로 수록되어 있습니다. 상담 시 반드시 지원 학과 페이지를 함께 확인하세요.',hl:''}],
+quote:'질문의 의도에 맞게, 논리적으로, 자신의 생각을 솔직하게 표현하기.',
+quoteSrc:'국민대 가이드북 면접 유의사항'},
+
+{id:'soongsil',num:'06',name:'숭실대학교',eng:'Soongsil University',tag:'SSU미래인재',
+badges:['SSU미래인재(서류형)','SSU미래인재(면접형)'],
+meta:[{l:'서류형 핵심',v:'탐구역량 60% — 전공 무관 깊이 있는 탐구도 우수 탐구역량'},{l:'면접형',v:'1단계 성적50%+면접50% / 12분 내외'},{l:'면접 평가',v:'전공 준비도+탐구 노력+자기평가력+발전가능성'}],
+eval:[{l:'탐구역량(서류형)',p:60},{l:'공동체역량(서류형)',p:30},{l:'학업역량(서류형)',p:10},{l:'진로역량(면접형)',p:50},{l:'학업역량(면접형)',p:30},{l:'공동체역량(면접형)',p:20}],
+evalNote:'서류형과 면접형 평가구조가 다름 — 출처: 숭실대 가이드북',
+
+forms:[
+  {name:"SSU미래인재(서류형) 서류평가 비율", bars:[
+    {l:"탐구역량",p:60},{l:"공동체역량",p:30},{l:"학업역량",p:10},
+  ]},
+  {name:"SSU미래인재(면접형) 2단계 반영 비율", bars:[
+    {l:"1단계 성적",p:50},{l:"면접평가",p:50},
+  ]}
+],talent:['서류형: 자기주도적으로 깊이 있는 탐구활동을 수행한 학생','면접형: 적극적으로 전공(계열) 관련 진로를 탐색해 온 학생','슬로건: 학생부종합전형은 보여주는 것이 아니라, 스스로를 설명하는 전형입니다'],
+checks:[{g:'탐구역량 체크포인트 — 가이드북 원문',items:['교과 수업과 각종 탐구활동 중 생긴 궁금증을 풀기 위해 책이나 논문 등 추가 자료를 찾아보며 지식을 넓히려고 노력해 본 적이 있는가?','탐구 과정에서 여러 교과목의 지식을 융합하여 활용해 본 적이 있는가?','탐구활동이 우리 주변의 실생활 문제나 미래 삶과 어떤 관련이 있는지 고민해 본 적이 있는가?','기존의 자료나 연구 결과를 그대로 받아들이지 않고 "왜 그럴까?" 혹은 "다른 방법은 없을까?" 의문을 가지며 새로운 관점으로 바라보려고 노력하는가?','하나의 자료에 의존하지 않고, 다양한 자료를 종합해 나만의 관점으로 재구성하여 발표한 적이 있는가?']},{g:'면접형 면접 평가 기준 — 가이드북 원문',items:['전공 준비도: 지원 전공에 대한 이해도와 구체적인 지원동기','전공 탐구 노력: 탐구활동의 탐구 동기, 탐구 과정, 자기평가 및 발전가능성','자기평가력: 목표에 비추어 자기를 평가하며 개선·발전해 나가는 실행 노력','발전가능성: 면접 전반을 통해 드러나는 인성, 면접태도, 숭실 공동체 적응 가능성']}],
+orig:[{label:'탐구역량 우수사례 원문 — 신소재공학과',text:'보온병 내부를 씻어도 잔여물이 남아 있어 악취가 나고, 건조가 잘 이루어지지 않아 미생물이 번식하기 쉬운 비위생적인 상황을 문제로 인식하여, 이에 대한 해결 방안을 심도 있게 탐구함. 보온병의 특성을 고려하여 열에 강하고 유연하며 인체에 무해한 소재를 탐색함. 팀원들과 사용 방법에 대해 논의하며 시뮬레이션을 진행한 결과 TPE 소재가 적합하다고 판단하였고, 해당 소재를 활용해 정교한 제품을 구현함. (숭실대 가이드북 탐구역량 우수사례)'}],
+good:[{t:'실생활 문제를 심화 탐구로 연결 (신소재공학과 사례)',b:'보온병 위생 문제를 인식 → 소재 탐색 → 팀 논의 → TPE 소재 적용 제품 구현. 1학년 활동에서 시작해 심화 탐구로 이어진 사례로 가이드북에 직접 수록.',src:'숭실대 가이드북 탐구역량 우수사례'}],
+bad:[{t:'탐구 없이 활동 나열만 한 경우',b:'탐구역량 60%가 핵심인 서류형에서 활동 종류는 많아도 "왜 그럴까?"라는 의문으로 이어지는 후속 탐구가 없는 경우 낮은 평가를 받을 수 있습니다.',src:'숭실대 가이드북'}],
+faq:[{q:'탐구역량에서 전공 관련 활동이 아니어도 되나요?',a:'지원 전공(계열)과 관련된 심층적인 탐구활동뿐만 아니라, 다양한 분야의 깊이 있는 탐구 경험 역시 우수한 탐구역량으로 평가합니다. 전공 연관성보다 탐구의 깊이가 핵심입니다.',hl:''}],
+quote:'학생부종합전형은 보여주는 것이 아니라, 스스로를 설명하는 전형입니다.',
+quoteSrc:'숭실대 가이드북'},
+
+{id:'kwangwoon',num:'07',name:'광운대학교',eng:'Kwangwoon University',tag:'광운참빛인재',
+badges:['광운참빛인재Ⅰ(면접형)','광운참빛인재Ⅱ(서류형)'],
+meta:[{l:'2027 변경',v:'기존 진로역량+인성 → 진로역량+공동체역량으로 개편'},{l:'동점자 1순위',v:'진로역량 성적 우위자 → 진로역량이 핵심'},{l:'면접 평가',v:'발전가능성(45%)+종합적사고력(30%)+인성(25%)'}],
+eval:[{l:'진로역량(면접형)',p:50},{l:'학업역량(면접형)',p:25},{l:'공동체역량(면접형)',p:25},{l:'진로역량(서류형)',p:45},{l:'학업역량(서류형)',p:35},{l:'공동체역량(서류형)',p:20}],
+evalNote:'동점자 처리 1순위: 진로역량 성적 우위자 — 출처: 광운대 가이드북',
+
+forms:[
+  {name:"광운참빛인재Ⅰ(면접형) 전형방법", bars:[
+    {l:"1단계 서류종합평가",p:100},
+    {l:"2단계 — 1단계 성적",p:60},
+    {l:"2단계 — 면접평가",p:40},
+  ]},
+  {name:"광운참빛인재Ⅱ(서류형) 전형방법", bars:[
+    {l:"서류종합평가",p:100},
+  ]}
+],talent:['학업역량: 교과 성취 수준과 함께 학업 과정에서 나타난 성장과 변화 양상','진로역량: 진로 관련 분야 자기주도성 + 발전가능성 + 전공 관련 교과 이수 노력 및 성취도'],
+checks:[{g:'학업역량 평가 기준 — 가이드북 원문',items:['전체적인 교과성적은 다른 지원자들에 비해 어느 정도인가?','대학 수학에 필요한 기본 과목의 성취도는 어느 정도인가?','교과 수업에서 적극적이고 집중력이 있으며 스스로 참여하여 이해하려는 태도와 성실성을 보이는가?','교과 관련 활동에서 책임감을 바탕으로 꾸준히 노력하여 최선을 다하는 태도와 행동을 보이는가?']},{g:'진로역량 평가 기준 — 가이드북 원문',items:['진로 관련 분야에 대하여 자기주도적으로 도전하고 성취한 경험이 있는가?','진로 관련 분야에 대한 활동을 지속적으로 수행한 경험이 있는가?','진로 관련 분야에 대한 탐색을 통해 지원 전공(계열)을 올바르게 이해하고 있는가?','지원 전공(계열)과 관련된 기본 과목은 어느 정도 이수했는가?','지원 전공(계열)과 관련하여 도전적인 과목을 이수하기 위해 어떤 노력을 하였는가?']}],
+orig:[{label:'진로역량 정의 — 가이드북 원문',text:'진로역량은 지원자가 해당 모집단위와 관련된 학업을 수행하기 위한 역량을 갖추었는지와 그 준비도를 평가하는 항목입니다. 여기서 역량은 진로 관련 분야에서의 자기주도적인 탐색과 활동 경험을 통해 형성된 학업 설계 능력을 의미하며, 준비도는 고교 교육과정 내에서의 과목 선택과 이수 과정을 통해 드러나는 전공(계열) 관련 관심과 이해 수준을 의미합니다. (광운대 가이드북)'}],
+good:[{t:'전공 관련 도전적 과목 이수',b:'지원 전공(계열)과 관련하여 도전적인 과목을 이수하기 위해 어떤 노력을 하였는가? — 이 항목이 진로역량의 핵심 평가 기준 중 하나입니다.',src:'광운대 가이드북'}],
+bad:[{t:'출결 불량은 동점자 처리에서 불리',b:'전 학년 출결상황 중 미인정 결석 총 횟수가 동점자 처리 3순위 기준으로 사용됩니다.',src:'광운대 가이드북'}],
+faq:[{q:'동점자 처리 기준이 있나요?',a:'1순위: 전 학년 진로역량 성적 우위자 / 2순위: 전 학년 학업역량 성적 우위자 / 3순위: 전 학년 출결상황 중 미인정 결석 총 횟수가 적은 자',hl:'진로역량이 광운대에서 실질적으로 가장 중요한 역량임을 보여주는 기준입니다.'}],
+quote:'진로역량은 지원자가 해당 모집단위와 관련된 학업을 수행하기 위한 역량을 갖추었는지와 그 준비도를 평가하는 항목입니다.',
+quoteSrc:'광운대 가이드북'},
+
+{id:'incheon',num:'08',name:'인천대학교',eng:'Incheon National University',tag:'자기추천전형',
+badges:['자기추천전형','기회균형','서해5도출신자'],
+meta:[{l:'특이 항목',v:'발전역량을 독립 항목으로 명시 (다른 대학과 차별화)'},{l:'면접',v:'면접위원 2인 / 지원자 1인 / 10분 내외 / 서류확인형'},{l:'면접 평가',v:'진로역량(30%)+발전역량(30%)+공동체역량(20%)+의사소통능력'}],
+eval:[{l:'학업역량',p:30},{l:'진로역량',p:30},{l:'발전역량',p:20},{l:'공동체역량',p:20}],
+evalNote:'서류평가 항목별 수치 비율은 가이드북에 명시되어 있지 않습니다. 학업역량·진로역량·발전역량·공동체역량 4개 요소로 평가합니다. (인천대 가이드북)',
+
+forms:[
+  {name:"자기추천전형 전형방법 (항목별 비율은 가이드북에 명시 없음)", bars:[
+    {l:"1단계 서류종합평가",p:100},
+  ]}
+],talent:['발전역량: 문제에 대한 대안적 해결책을 만들어 낼 수 있는 능력 + 진취적 태도','진로역량: 지원 학과에 대한 열정·흥미·관심도·이해도 및 진로 탐색 과정과 노력'],
+checks:[{g:'서류 & 면접 평가 요소 — 가이드북 원문',items:['학업역량: 고교 교육과정에서 이수한 교과의 기초학업역량 및 학업의 발전 정도','발전역량: 문제에 대한 대안적 해결책을 만들어 낼 수 있는 능력 + 진취적 태도','면접 진로역량(30%): 지원 학과에 대한 열정, 흥미, 관심도, 이해도 및 진로 탐색 과정과 노력','면접 발전역량(30%): 문제해결의 논리성, 창의성, 탐구력, 융합적 사고 역량','공동체역량(20%): 리더십 역량 및 공동체 의식']}],
+orig:[{label:'합격생 조언 — 가이드북 원문',text:'"시작은 관심, 끝은 전공!" — 전공 결정 계기 / "시작은 평범하지만, 마지막은 특별한 이야기!" — 의미 있던 고교 활동 / "내 선택이 만든 배움!" — 선택과목 / "학교생활기록부 속 나만의 성장 이야기!" (인천대 가이드북 INU 합격 이야기)'}],
+good:[{t:'합격생 조언 — 시작은 관심, 끝은 전공',b:'"시작은 관심, 끝은 전공!" — 합격생들이 공통적으로 강조한 메시지. 진로 탐색의 시작과 끝이 자연스럽게 학생부에 드러나는 것이 중요합니다.',src:'인천대 가이드북 INU 합격 이야기'}],
+bad:[],
+faq:[],
+quote:'제출서류를 바탕으로 재확인하여 평가요소에 따라 종합적으로 정성평가 합니다.',
+quoteSrc:'인천대 가이드북'},
+
+{id:'inha',num:'09',name:'인하대학교',eng:'Inha University',tag:'인하미래인재',
+badges:['인하미래인재(면접형)','인하미래인재(서류형)'],
+meta:[{l:'면접형',v:'1단계 서류100%(3.5배수) → 2단계 서류70%+면접30%'},{l:'서류형',v:'일괄합산 서류100%'},{l:'기초학업역량',v:'고교 모든 교과 지식이 대학 수학에 필수 — 편식 금지'}],
+eval:[{l:'진로탐구역량',p:50},{l:'기초학업역량',p:30},{l:'공동체역량',p:20}],
+evalNote:'면접형·서류형 모두 동일 비율 — 출처: 인하대 가이드북',
+
+forms:[
+  {name:"인하미래인재(면접형) 서류평가 반영비율", bars:[
+    {l:"진로탐구역량",p:50},{l:"기초학업역량",p:30},{l:"공동체역량",p:20},
+  ]},
+  {name:"인하미래인재(서류형) 서류평가 반영비율", bars:[
+    {l:"기초학업역량",p:50},{l:"진로탐구역량",p:30},{l:"공동체역량",p:20},
+  ]}
+],talent:['현재의 성과가 아닌, 성장 가능성과 역량에 집중하여 선발','연계와 융합이 강조되는 미래시대에 창의성을 발휘하기 위해서는 폭넓게 학습하는 것이 중요','인격도야, 진리탐구, 사회봉사 창학이념'],
+checks:[{g:'기초학업역량 평가 내용 — 가이드북 원문',items:['전체적인 교과 성취는 어느 정도인가?','교과별, 학년별 성적 추이는 어떠한가?','소홀히 한 교과 없이 수업 시간에 능동적으로 참여했는가?','자신의 부족한 부분을 확인하고 발전하기 위해 노력하였는가?','학업능력: 원점수, 평균, 표준편차, 수강인원 등을 종합적으로 고려하여 정성적으로 평가']},{g:'진로탐구역량 평가 내용 — 가이드북 원문',items:['진로관심: 자신의 진로를 위해 선택한 교과목의 적절성 + 창의적 체험활동에서 이루어진 진로개발 활동','선택교과의 적절성: 이수한 진로(전공)관련 교과목의 과목 수, 이수단위, 교과목 간의 위계(선행교과 이수 여부)','탐구역량: 자신이 습득한 지식의 깊이를 더하기 위한 노력','희망진로(전공) 관련하여 어떤 교과목을 이수했으며, 성취도는 어느 정도인가?']}],
+orig:[{label:'"기초"라는 단어를 쓴 이유 — 가이드북 원문',text:'학업역량 평가에 있어 "기초"라는 단어를 붙인 이유는 고교에서 함양한 모든 교과 지식과 역량이 대학 수학에 필수가 된다는 점을 강조하기 위함입니다. IT계에 혁신을 일으킨 애플의 창업자 스티브 잡스가 문학과 철학에도 조예가 깊었다는 사실이 보여주듯 연계와 융합이 강조되는 미래시대에 창의성을 발휘하기 위해서는 폭넓게 학습하는 것이 중요합니다. (인하대 가이드북)'}],
+good:[{t:'진로 관련 교과목 위계에 따라 이수',b:'선택교과의 적절성은 이수한 진로(전공)관련 교과목의 과목 수나 이수단위, 교과목 간의 위계(선행교과 이수 여부) 등을 고교 교육과정 편성표를 참조하여 평가합니다.',src:'인하대 가이드북'}],
+bad:[{t:'진로 무관 교과를 소홀히 한 경우',b:'기초학업역량에서 좋은 평가를 받기 위해서는 진로(전공)관련 교과목 중심으로 공부하되, 관련이 적은 교과라도 소홀히 하지 않는 성실함이 중요합니다.',src:'인하대 가이드북'}],
+faq:[{q:'기초학업역량에 왜 "기초"라는 단어를 쓰나요?',a:'고교에서 함양한 모든 교과 지식과 역량이 대학 수학에 필수가 된다는 점을 강조하기 위함입니다. 스티브 잡스가 문학과 철학에도 조예가 깊었듯, 연계와 융합이 강조되는 미래시대에 창의성을 발휘하기 위해서는 폭넓게 학습하는 것이 중요합니다.',hl:''}],
+quote:'탐구역량은 교과 과정이나 진로관련 활동 과정에서 자신이 습득한 지식의 깊이를 더하기 위한 노력을 평가합니다.',
+quoteSrc:'인하대 가이드북'},
+
+{id:'hufs',num:'10',name:'한국외국어대학교',eng:'HUFS',tag:'면접형 · 서류형',
+badges:['면접형','서류형','SW인재','기회균형'],
+meta:[{l:'면접형',v:'서류100%(1단계 3배수) → 1단계50%+면접50%'},{l:'블라인드 면접',v:'교복 착용 금지 / 고교명 언급 금지'},{l:'면접 평가',v:'진로개발역량(60%)+협력적소통역량(40%)'}],
+eval:[{l:'학업역량',p:50},{l:'진로역량',p:30},{l:'공동체역량',p:20}],
+evalNote:'면접형·서류형·SW인재·기회균형 모두 동일 비율 — 출처: 한국외대 가이드북',
+
+forms:[
+  {name:"면접형 전형방법", bars:[
+    {l:"1단계 서류 100%(3배수 선발)",p:100},
+    {l:"2단계 — 서류 50%",p:50},
+    {l:"2단계 — 면접 50%",p:50},
+  ]},
+  {name:"서류형·SW인재·기회균형 전형방법", bars:[
+    {l:"서류 100%",p:100},
+  ]},
+  {name:"면접형 면접평가 비율", bars:[
+    {l:"진로개발역량",p:60},{l:"협력적소통역량",p:40},
+  ]}
+],talent:['학업역량: 유난히 소홀한 과목이 있는가? — 이 질문을 명시적으로 확인','진로역량: 전공(계열)과 관련된 과목을 이수하기 위하여 추가적인 노력을 하였는가?','공동체역량: 타인의 의견에 공감하고 수용하는 태도, 나눔·배려, 성실성과 규칙준수'],
+checks:[{g:'학업역량 평가 지표 — 가이드북 원문',items:['대학 수학에 필요한 기본 교과목(국어, 수학, 영어, 사회/과학 등)의 교과성적은 적절한가?','그 외 교과목(예술·체육, 기술·가정/정보, 제2외국어/한문, 교양 등)의 교과성적은? 유난히 소홀한 과목이 있는가?','학기별/학년별 성적의 추이는 어떠한가?','성취동기와 목표의식을 가지고 자발적으로 학습하려는 의지가 있는가?','교과와 각종 탐구활동 등을 통해 지식을 확장하려고 노력하고 있는가?']},{g:'진로역량·공동체역량 — 가이드북 원문',items:['전공(계열)과 관련된 과목을 이수하기 위하여 추가적인 노력을 하였는가? (공동교육과정, 온라인수업, 소인수과목 등)','선택과목(일반/진로)은 교과목 학습단계(위계)에 따라 이수하였는가?','자신의 관심 분야나 흥미와 관련한 다양한 활동에 참여하여 노력한 경험이 있는가?','학교생활 속에서 나눔을 실천하고 생활화한 경험이 있는가?','교내 활동에서 자신이 맡은 역할에 최선을 다하려고 노력한 경험이 있는가?']}],
+orig:[{label:'진로개발역량 면접 평가 — 가이드북 원문',text:'진로개발역량은 자신의 적성과 흥미를 바탕으로 진로 방향을 탐색 및 구체화하고 체계적으로 사고해 계획을 수립 및 실천하는 능력과 목표 달성을 위해 스스로 학습을 설계 및 실행하는 주도적 태도를 평가합니다. (한국외대 가이드북)'}],
+good:[{t:'AI 활용 탐구가 세특에 기록된 사례',b:'"AI, 4차 산업혁명과 미국대학 인재상"을 주제로 한 명사특강에 참여. AI 시대에는 기술을 비판적으로 해석하고 사회적 맥락 속에서 판단하는 사고력이 핵심 역량임을 이해.',src:'한국외대 가이드북 세특 예시'}],
+bad:[{t:'예체능·정보 교과를 유난히 소홀히 한 경우',b:'"유난히 소홀한 과목이 있는가?" — 이 질문을 평가 지표에 명시적으로 포함하고 있습니다.',src:'한국외대 가이드북'}],
+faq:[{q:'블라인드 면접에서 유의해야 할 점은?',a:'성명·수험번호·출신고교명 및 고교유형 등 평가에 영향을 미치는 신상정보의 언급을 금지합니다. 면접 당일 교복 착용이 금지됩니다.',hl:''}],
+quote:'진로개발역량은 자신의 적성과 흥미를 바탕으로 진로 방향을 탐색 및 구체화하고 체계적으로 사고해 계획을 수립 및 실천하는 능력을 평가합니다.',
+quoteSrc:'한국외대 가이드북 면접 평가'},
+
+{id:'koreatech',num:'11',name:'한국기술교육대학교',eng:'KOREATECH',tag:'창의인재전형',
+badges:['창의인재(서류형)','창의인재(면접형)'],
+meta:[{l:'나우리역량',v:'성실성+적극성·주도성+협동심·공동체의식 — 독자 명칭'},{l:'면접형 실질',v:'서류 47.4% + 면접 52.6%'},{l:'특화 분야',v:'AI·빅데이터 / SW중심대학 (2025~2033)'}],
+eval:[{l:'전공적합성(서류)',p:35},{l:'학업역량(서류)',p:35},{l:'나우리역량(서류)',p:30},{l:'전공적합성(면접)',p:40},{l:'발전가능성(면접)',p:30},{l:'나우리역량(면접)',p:30}],
+evalNote:'학교폭력 조치사항 정성평가 반영 — 출처: 한기대 가이드북',
+
+forms:[
+  {name:"창의인재(서류형) 전형방법", bars:[{l:"서류 100%",p:100}]},
+  {name:"창의인재(면접형) 전형방법", bars:[
+    {l:"1단계 서류 100%(선발 후)",p:100},
+    {l:"2단계 — 서류",p:60},
+    {l:"2단계 — 면접",p:40},
+  ]},
+  {name:"창의인재 서류평가 비율 (서류형·면접형 공통)", bars:[
+    {l:"전공적합성 (전공활동 우수성+활동 일관성)",p:35},
+    {l:"학업역량 (기초학업역량+학업태도)",p:35},
+    {l:"나우리역량 (성실성+주도성+협동심)",p:30},
+  ]}
+],talent:['AI·빅데이터 기반 미래 핵심 인재 양성','취업의 질 우수: 대기업·공기업·중견기업 취업률 최상위권'],
+checks:[{g:'평가요소별 체크리스트 — 가이드북 원문',items:['학업역량: 다양한 교과목에서 보이는 바른 학업태도와 공부 습관','학업역량: 필요에 따라 어려운 심화 과목이나 학습 내용에도 도전하려는 의지','전공적합성: 지원 전공(계열)과 관련해 스스로 선택하여 수강한 과목이 얼마나 되는가?','전공적합성: 지원 전공(계열)과 관련된 교과 성적이 우수한가?','전공관련 활동: 교과 관련 활동(세부능력 및 특기사항)이 있는가?','나우리역량: 스스로 목표를 설정하고 주도적, 적극적으로 참여하는 경험과 태도','나우리역량: 구성원들과 협력을 통하여 공동의 과제를 수행하고 완성한 경험이 있는가?','나우리역량: 타인에 대한 진정성 있는 나눔과 배려심']},{g:'면접 질문 예시 — 가이드북 원문',items:['Q1. 기계공학과 연계하여 학술자료와 독서활동을 통해 작성한 활동 보고서의 주요 내용을 설명해주세요.','Q2. 지원자의 희망전공(계열)에서 중요한 물리과목의 학업성취도가 상승하였는데 어떤 노력을 기울였나요?']}],
+orig:[],
+good:[{t:'전공 관련 교과와 활동의 일관성',b:'지원 전공(계열)에 관련된 교과 관련 활동(세부능력 및 특기사항)이 있는가? / 전공 관련 창의적 체험활동(자율, 동아리, 봉사, 진로)에 참여하였는가? — 두 항목이 함께 확인됩니다.',src:'한기대 가이드북'}],
+bad:[{t:'학교폭력 조치사항이 있는 경우',b:'학교폭력 조치사항은 정성평가하여 반영합니다.',src:'한기대 가이드북'}],
+faq:[{q:'학교폭력 조치사항은 어떻게 반영되나요?',a:'학교폭력 조치사항은 정성평가하여 반영합니다. 학교폭력 조치사항 대입 반영은 전체 전형에서 이루어집니다.',hl:''}],
+quote:'본인이 희망하는 분야의 전공활동에서 보이는 우수한 성과와 전공 관련 활동의 일관성 및 다양성이 함께 확인됩니다.',
+quoteSrc:'한기대 가이드북'},
+
+{id:'uos',num:'13',name:'서울시립대학교',eng:'University of Seoul',tag:'학생부종합Ⅰ·Ⅱ',
+badges:['학생부종합Ⅰ','학생부종합Ⅱ','사회공헌·통합전형'],
+meta:[{l:'핵심 특징',v:'학부·과별 인재상이 실제 평가 척도로 작동 — 타 대학과 다른 위상'},{l:'블라인드',v:'모든 서류 블라인드 / 면접 교복 금지 / 고교명 언급 금지'},{l:'면접',v:'서류확인형 심층면접 12분 내외'}],
+eval:[{l:'학업역량',p:40},{l:'잠재역량',p:30},{l:'사회역량',p:30}],
+evalNote:'서류평가 항목별 수치 비율은 가이드북에 명시되어 있지 않습니다. 학업역량·잠재역량·사회역량 3요소로 종합 정성평가합니다. (서울시립대 가이드북)',
+
+forms:[
+  {name:"학생부종합Ⅰ·Ⅱ 전형방법 (항목별 비율은 가이드북에 명시 없음)", bars:[
+    {l:"1단계 서류평가",p:100},
+    {l:"2단계 — 서류평가",p:50},
+    {l:"2단계 — 면접평가",p:50},
+  ]}
+],talent:['경영학부: 수리적 분석력과 정보 활용 능력, 외국어 능력 우수 / 논리적이면서도 창의적인 경영적 사고 / 다양성을 존중하는 포용적 리더십','기계정보공학과: 수학(미적분, 기하) 및 기초 과학(물리) 학업성취도 높은 학생 / 기계 및 정보기술에 흥미 높으며 창의적·융합적 사고력'],
+checks:[{g:'서울시립대 평가의 특이점 — 가이드북 원문',items:['학부·과별 인재상은 실제 평가 척도로써 적극적으로 활용','단순히 성취 수준이 높기만 한 것이 정성평가에서 절대적으로 유리하기만 한 것은 아님','단순 "선택"에만 집중하고 그치는 것이 아닌 "선택의 과정"과 "선택의 이유"가 더 중요한 맥락','진로선택과목의 과목명 고급화 전략만으로는 우수한 평가를 받을 수 없음']},{g:'블라인드 면접 유의사항 — 가이드북 원문',items:['모든 면접은 제출서류를 기반으로 한 서류확인형 심층면접으로 진행','면접 시 교복착용을 금지','지원자 성명, 수험번호, 출신고교명 및 고교유형 등 신상정보의 언급을 금지']}],
+orig:[{label:'인재상 중심평가 특이점 — 가이드북 원문',text:'서울시립대학교는 서류 및 면접평가 시 학부·과에서 제시한 인재상을 중심으로 평가를 진행하고 있습니다. 모집단위별(학부·과) 인재상은 각 학과별 특성과 의견을 반영한 세부사항으로, 단순한 전공선택 길라잡이를 넘어 실제 평가 척도로써 적극적으로 활용되고 있다는 점이 특징입니다. 학과별 특성과 실제평가를 고려하여 합의된 기준점이기에 다른 대학의 "인재상"과는 다른 위상을 갖고 있습니다. (서울시립대 가이드북)'}],
+good:[{t:'과목 선택의 이유와 과정이 드러난 경우',b:'단순 "선택"에만 집중하고 그치는 것이 아닌 "선택의 과정"과 "선택의 이유"가 더 중요한 맥락입니다.',src:'서울시립대 가이드북'}],
+bad:[{t:'과목명 고급화 전략만으로 접근한 경우',b:'진로선택과목의 과목명 고급화 전략만으로 우수한 평가를 받는 것은 아닙니다.',src:'서울시립대 가이드북'}],
+faq:[{q:'인재상이 다른 대학과 어떻게 다른가요?',a:'서울시립대 학부·과별 인재상은 단순한 전공선택 길라잡이를 넘어 실제 평가 척도로써 적극적으로 활용됩니다. 학과별 특성과 실제평가를 고려하여 합의된 기준점이기에 다른 대학의 인재상과는 다른 위상을 갖고 있습니다.',hl:''}],
+quote:'학부·과별 인재상은 각 학과별 특성과 관심이 반영된 요소이자 평가 단계에서 실질적인 영향력을 발휘하는 척도입니다.',
+quoteSrc:'서울시립대 가이드북'},
+
+{id:'kangwon',num:'15',name:'강원대학교',eng:'Kangwon National University',tag:'학생부종합 · 춘천·삼척',
+badges:['학생부종합','춘천캠퍼스','삼척캠퍼스'],
+meta:[{l:'교육 목표',v:'실사구시(實事求是) — 실사구시형 창의·협동 인재'},{l:'학폭 반영',v:'1~9호 구분하여 등급 감점 또는 비율 감점'},{l:'가이드북 특징',v:'학과별 인재상·권장 과목·우수 평가 활동·추천도서 수록'}],
+eval:[{l:'학업역량',p:35},{l:'전공적합성',p:35},{l:'인성',p:30}],
+evalNote:'출처: 강원대 가이드북',
+
+forms:[
+  {name:"미래인재서류전형 서류평가 비율", bars:[
+    {l:"학업역량",p:40},{l:"진로역량(자기주도역량)",p:30},{l:"공동체역량",p:30},
+  ]},
+  {name:"미래인재면접전형 1단계 서류평가 비율", bars:[
+    {l:"학업역량",p:30},{l:"진로역량(자기주도역량)",p:50},{l:"공동체역량",p:20},
+  ]},
+  {name:"미래인재면접전형 2단계 면접평가 비율", bars:[
+    {l:"학업역량",p:30},{l:"진로역량(자기주도역량)",p:50},{l:"공동체역량",p:20},
+  ]}
+],talent:['실사구시형 창의·협동 인재 / 핵심역량: 미래·인성·창의·협동·실천','간호학과: 논리적·합리적 추론 능력 및 문제 해결 능력 / 전공에 대한 진로탐색 노력 / 효율적인 의사소통 능력','경영회계학부: 명확한 목표의식 / 창의성 / 실행력 / 대인관계를 중시하는 협력적 인재'],
+checks:[{g:'학교폭력 조치사항 반영 방법 — 가이드북 원문',items:['1호(피해학생 접촉·협박·보복 금지): 서류평가 시 1등급 감점','2호(학교에서의 봉사): 서류평가 시 2등급 감점','3~4호: 10% 감점','5~6호: 15% 감점','7~9호: 30% 감점','합격자 통보 이후 또는 입학 이후라도 추가 사실 확인 시 불합격 또는 입학 취소 처리 가능']},{g:'면접 조언 — 가이드북 원문',items:['자신만의 비장의 무기를 준비하기: 새롭게 도전한 경험, 몰입·집중해서 성취한 경험, 최선을 다해 노력했던 경험','면접의 처음 발언: 지원 동기와 함께 나의 특성과 강점을 어필','최종 발언 기회: 미처 답변하지 못한 내용 보충 + 자신의 열정과 포부를 다시 한 번 강조','블라인드 면접에 위배되는 답변 절대 삼가야 함']}],
+orig:[{label:'면접 조언 — 가이드북 원문',text:'자신만의 비장의 무기를 준비하기! 지원자만의 차별화된 역량은 면접평가에서 큰 장점이 될 수 있습니다. 학교생활 중에서 새롭게 도전한 경험, 몰입하거나 집중해서 성취한 경험, 실패를 떠나 최선을 다해 노력했던 경험, 남보다 더 뛰어난 성취를 이룬 경험, 나의 노력으로 많은 사람을 유익하게 했던 경험 등과 같은 나만의 차별화된 장점을 답변과정에서 잘 활용하시기 바랍니다. (강원대 가이드북)'}],
+good:[{t:'차별화된 경험이 면접에서 강점이 된 경우',b:'지원자만의 차별화된 역량은 면접평가에서 큰 장점이 될 수 있습니다. 새롭게 도전한 경험, 몰입하거나 집중해서 성취한 경험, 나의 노력으로 많은 사람을 유익하게 했던 경험 등을 잘 활용하시기 바랍니다.',src:'강원대 가이드북 면접 조언'}],
+bad:[{t:'학교폭력 조치사항 — 반드시 확인',b:'학교폭력 조치사항이 학생부에 기재된 경우 1~9호 구분에 따라 서류평가 시 등급 감점 또는 일정 비율이 감점됩니다. 합격 후에도 추가 확인 시 불합격·입학 취소 처리가 가능합니다.',src:'강원대 가이드북'}],
+faq:[{q:'가이드북에 Pass Signal이 있다고 하던데?',a:'강원대 가이드북에는 학과별 합격 시그널(Pass Signal) 항목이 별도로 수록되어 있습니다. 상담 시 지원 학과의 Pass Signal을 함께 확인하는 것이 중요합니다.',hl:''}],
+quote:'면접의 처음과 마지막 발언 기회를 활용하기. 최종 발언은 미처 답변하지 못한 내용을 보충하거나, 자신의 열정과 포부를 다시 한 번 강조할 수 있는 절호의 기회입니다.',
+quoteSrc:'강원대 가이드북 면접 조언'},
+
+{id:'gjue',num:'16',name:'광주교육대학교',eng:'Gwangju Nat\'l Univ. of Education',tag:'교직적성우수자',
+badges:['교직적성우수자전형','지역인재전형','전남교육감추천전형'],
+meta:[{l:'2027 변경',v:'학업역량(50)+교직적합성(30)+교직인성(20) → 학업역량(40)+교직역량(40)+공동체역량(20)'},{l:'평가 척도',v:'A+(매우우수)→A→B+→B(보통)→C→D→E(매우미흡) 7등급'},{l:'평가 방식',v:'평가위원 2인 평균 반영 + 차이 크면 재평가'}],
+eval:[{l:'학업역량',p:40},{l:'교직역량(신설)',p:40},{l:'공동체역량',p:20}],
+evalNote:'교직역량이 40%로 신설 — 출처: 광주교대 가이드북',
+
+forms:[
+  {name:"교직적성우수자전형 서류평가 비율 (2027학년도 변경)", bars:[
+    {l:"학업역량",p:40},{l:"교직역량(신설)",p:40},{l:"공동체역량",p:20},
+  ]}
+],talent:['격조 높은 초등 교원 — 진리를 탐구, 정의롭게 행동, 자랑스런 스승의 길','교직역량: 교육 및 교직 전반을 이해하기 위한 탐색 노력과 활동 경험 + 문화적 소양','학업역량: 특정 계열에 치우치지 않고 균형있게 과목을 이수 — 전 과목 균형 필수'],
+checks:[{g:'학업역량 평가 내용 — 가이드북 원문',items:['학업성취도: 인문, 자연 등 특정 계열에 치우치지 않고 균형있게 과목을 선택하고 이수하였는가? 그에 대한 성취 수준은 양호한가?','학업성취도: 체육, 예술, 기술·가정 등 과목의 성취 수준도 양호한가?','학업성취도: 깊이 있는 학습을 보여주는 과목 선택과 학습 성과가 있는가?','학업태도: 수업에 적극적으로 참여하려는 태도를 보이는가?','학업태도: 배운 내용을 학습 및 탐구 활동에 유연하게 적용하는가?','학업태도: 출결은 양호한가?']},{g:'교직역량 평가 내용 — 가이드북 원문',items:['교육 및 교직에 대한 탐색활동과 경험','문화적 소양','초등교육과의 특색에 맞게 전 과목의 성취 수준을 종합적으로 평가 — 예체능 및 기타 과목을 소홀히 해서는 안 됨','특정계열이나 과목에 치우치지 않는 고른 과목 이수를 권장']}],
+orig:[{label:'전 과목 균형 강조 — 가이드북 원문',text:'초등교육과의 특색에 맞게 전 과목의 성취 수준을 종합적으로 평가하므로 예체능 및 기타 과목을 소홀히 해서는 안 되며 특정계열이나 과목에 치우치지 않는 고른 과목 이수를 권장합니다. (광주교대 가이드북)'}],
+good:[{t:'전 과목 균형 이수',b:'초등교육과의 특색에 맞게 전 과목의 성취 수준을 종합적으로 평가하므로 예체능 및 기타 과목을 소홀히 해서는 안 되며 특정계열이나 과목에 치우치지 않는 고른 과목 이수를 권장합니다.',src:'광주교대 가이드북'}],
+bad:[{t:'특정 계열에 치우친 과목 이수',b:'인문, 자연 등 특정 계열에 치우치지 않고 균형있게 과목을 선택하고 이수하였는가? — 초등교원 양성 특성상 전 교과 균형 이수가 필수입니다.',src:'광주교대 가이드북'}],
+faq:[{q:'초등교사 목표인데 어떤 점을 가장 강조해야 하나요?',a:'2027학년도부터 신설된 교직역량(40%)에서 교육 및 교직에 대한 탐색활동과 문화적 소양을 평가합니다. 학업역량에서는 전 과목 균형 이수가 핵심 — 예체능 및 기타 과목을 소홀히 해서는 안 됩니다.',hl:''}],
+quote:'초등교육과의 특색에 맞게 전 과목의 성취 수준을 종합적으로 평가하므로 예체능 및 기타 과목을 소홀히 해서는 안 됩니다.',
+quoteSrc:'광주교대 가이드북'},
+
+{id:'hanyangE',num:'19',name:'한양대학교(ERICA)',eng:'Hanyang University ERICA',tag:'서류형 · 면접형',
+badges:['서류형(489명)','면접형(60명)'],
+meta:[{l:'2027 변경',v:'진로역량 배점 확대 / 학폭 조치사항 공동체역량에서 정성 평가'},{l:'면접 평가',v:'통합적사고역량(70%)+의사소통역량(30%)'},{l:'입시 오해',v:'"외부 활동이나 특별한 스펙이 있어야" — 아니다 (가이드북 명시)'}],
+eval:[{l:'학업역량',p:40},{l:'진로역량(확대)',p:40},{l:'공동체역량',p:20}],
+evalNote:'2027학년도 진로역량 배점 확대 — 출처: 한양에리카 가이드북',
+
+forms:[
+  {name:"서류형 서류평가 비율", bars:[
+    {l:"학업역량",p:40},{l:"진로역량",p:40},{l:"공동체역량",p:20},
+  ]},
+  {name:"면접형 전형방법", bars:[
+    {l:"1단계 서류평가",p:100},
+    {l:"2단계 — 1단계 성적",p:70},
+    {l:"2단계 — 면접평가",p:30},
+  ]},
+  {name:"면접형 면접평가 비율", bars:[
+    {l:"통합적사고역량",p:70},{l:"의사소통역량",p:30},
+  ]}
+],talent:['실용학문을 기반으로 교육과 연구, 산학협력의 가치를 유기적으로 연결','이론에 머무르지 않고 배움을 실제 사회와 산업 현장으로 확장하는 교육','전공의 경계를 초월하는 융합적 사고 + 진로 자기설계 역량'],
+checks:[{g:'서류평가 평가항목별 주요사항 — 가이드북 원문',items:['학업역량: 재학 기간 내 교과활동 확인 / 학업성취도(40점) + 학업태도','진로역량: 전공관련 교과 이수 노력 + 전공 관련 교과 성취도 + 진로 탐색 활동 경험 (40점)','공동체역량: 성실성 + 소통능력 + 학교폭력 사실 등 확인 (20점)','학교폭력 조치사항(1~9호)이 학생부에 있으면 공동체역량에서 정성 평가로 반영']},{g:'전공별 평가 포인트 — 가이드북 원문',items:['리더십과 커뮤니케이션 능력 / 수학·사회·영어 기반 학업 준비 / 기획 및 제작 과정에서의 주도성','미디어·광고·문화 관련 탐구 활동 / 경제·경영 현상에 대한 이해 / 자료 해석 능력','스포츠과학부 합격자 선택 과목: 사회문제 탐구(51.9%), 미술 감상과 비평(37.0%), 영어권 문화(29.6%) 등']}],
+orig:[{label:'입시 오해 바로잡기 — 가이드북 원문',text:'외부 활동이나 특별한 스펙이 있어야 합격할 수 있다? — 아니다. 학교 내에서의 성실한 활동과 진로 탐색 과정이 중요합니다. 학생부종합전형은 객관적인 기준이 없는 깜깜이전형이다? — 아니다. (한양에리카 가이드북)'}],
+good:[{t:'합격자 진로선택과목 현황 공개 활용',b:'가이드북에 합격자가 이수한 진로선택과목 현황이 공개되어 있습니다. 스포츠과학부 기준 상위 10위 과목: 사회문제 탐구(51.9%), 미술 감상과 비평(37.0%) 등. 지원 전공에 맞는 과목 선택 방향을 확인하는 데 활용할 수 있습니다.',src:'한양에리카 가이드북'}],
+bad:[{t:'학교폭력 조치사항이 있는 경우',b:'학교폭력 조치사항(제1호~제9호)이 학교생활기록부에 기재되어 있는 자는 학생부종합평가 요소 중 "공동체역량"에서 정성 평가로 반영됩니다.',src:'한양에리카 가이드북'}],
+faq:[{q:'외부 활동이나 특별한 스펙이 있어야 합격할 수 있나요?',a:'가이드북에 이 오해를 명시적으로 바로잡고 있습니다. 스펙이나 외부 수상보다 학교 내에서의 성실한 활동과 진로 탐색 과정이 중요합니다.',hl:''},{q:'학교폭력 조치사항이 있으면 어떻게 되나요?',a:'학교폭력 조치사항(제1호~제9호)이 학교생활기록부에 기재되어 있는 자는 학생부종합평가 요소 중 "공동체역량"에서 정성 평가로 반영됩니다.',hl:''}],
+quote:'한양대학교 ERICA는 입학생 개개인의 성장 가능성과 잠재력에 주목하고, 미래 사회를 주도할 창의적이고 실천적인 인재를 길러내기 위해 끊임없이 노력하고 있습니다.',
+quoteSrc:'한양에리카 가이드북'},
+
+{id:'jeonju',num:'18',name:'전주대학교',eng:'Jeonju University',tag:'학생부종합',
+badges:['학생부종합(일반학생)','지역인재','사회통합'],
+meta:[{l:'전형 방식',v:'서류 100% / 수능최저 없음'},{l:'주의사항',v:'매년 경쟁률·성적 변수가 커서 입시 결과로만 합격 판단 불가'}],
+eval:[{l:'학업역량',p:35},{l:'진로역량',p:35},{l:'공동체역량',p:30}],
+evalNote:'서류평가 항목별 수치 비율은 가이드북에 명시되어 있지 않습니다. (전주대 가이드북)',
+
+forms:[
+  {name:"학생부종합 전형방법 (항목별 비율은 가이드북에 명시 없음)", bars:[
+    {l:"서류 100%",p:100},
+  ]}
+],talent:['법학과: 자유민주적 기본질서를 이해하고 법치주의 실현에 기여하는 인재 / 논리적·비판적 사고력','경찰행정학과: 올바른 공직관을 갖춘 치안 수요에 부합하는 인재','동물보건학과: 동물의 생명과 복지를 존중하며 임상 실무능력과 과학적 사고를 갖춘 현장 중심형 전문 인재'],
+checks:[{g:'가이드북 활용 방법',items:['전주대 가이드북에는 학과별 인재상·핵심역량이 상세하게 수록되어 있습니다.','지원 학과의 인재상과 핵심역량을 확인한 후 학생부와 대조하여 상담에 활용하세요.','매년 경쟁률, 지원자 성적, 합격자 이동상황, 반영비율 등 다양한 변수에 의해 입시 결과가 달라집니다.']}],
+orig:[{label:'입시 결과 활용 주의 — 가이드북 원문',text:'매년 경쟁률, 지원자 성적, 합격자 이동상황, 반영비율 등 다양한 변수에 의하여 달라지고 있으므로 본 자료로는 합격 여부를 판단할 수 없으며, 참고자료로만 활용하시기 바랍니다. (전주대 가이드북)'}],
+good:[],bad:[],faq:[],
+quote:'매년 경쟁률, 지원자 성적, 합격자 이동상황, 반영비율 등 다양한 변수에 의하여 달라지고 있으므로 본 자료로는 합격 여부를 판단할 수 없으며, 참고자료로만 활용하시기 바랍니다.',
+quoteSrc:'전주대 가이드북'},
+];
+
+/* ── build cover grid ── */
+const g=document.getElementById('uniGrid');
+UNI.forEach((u,i)=>{
+  const el=document.createElement('div');
+  el.className='uc';
+  el.innerHTML=`<div class="uc-n">${u.num}</div><div class="uc-name">${u.name}</div><div class="uc-tag">${u.tag}</div>`;
+  el.onclick=()=>open(i,'overview');
+  g.appendChild(el);
+});
+
+let CUR=0, CUR_TAB='overview';
+
+function open(idx,tabId){
+  CUR=idx; CUR_TAB=tabId;
+  const u=UNI[idx];
+  document.getElementById('cover').style.display='none';
+  document.getElementById('detail').style.display='block';
+  document.getElementById('det-name').childNodes[0].nodeValue=u.name+' ';
+  document.getElementById('det-sub').textContent=u.eng+' · '+u.num+'/17';
+  document.getElementById('btnPrev').disabled=idx===0;
+  document.getElementById('btnNext').disabled=idx===UNI.length-1;
+  document.getElementById('lp-uni').textContent=u.name;
+  document.getElementById('lp-eng').textContent=u.eng;
+  buildLeft(u,tabId);
+  renderRight(u,tabId);
+}
+
+function buildLeft(u,activeId){
+  const lp=document.getElementById('leftPanel');
+  const head=lp.querySelector('.lp-head');
+  head.querySelector('.lp-uni').textContent=u.name;
+  head.querySelector('.lp-eng').textContent=u.eng;
+  Array.from(lp.querySelectorAll('.tab-btn')).forEach(b=>b.remove());
+  TABS.forEach(t=>{
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(t.id===activeId?' active':'');
+    btn.innerHTML=`<span class="tab-icon">${t.icon}</span><span class="tab-label">${t.label}</span>`;
+    btn.onclick=()=>{CUR_TAB=t.id;buildLeft(u,t.id);renderRight(u,t.id);};
+    lp.appendChild(btn);
+  });
+}
+
+function renderRight(u,tabId){
+  const rp=document.getElementById('rightPanel');
+  let html='';
+
+  if(tabId==='overview'){
+    let meta=u.meta.map(m=>`<div class="meta-c"><div class="mc-lbl">${m.l}</div><div class="mc-val">${m.v}</div></div>`).join('');
+    html=`
+      <div class="cp-eyebrow">${u.num} / ${u.eng}</div>
+      <h1 class="cp-h1">${u.name}</h1>
+      <p class="cp-sub">${u.badges.map(b=>`<span style="display:inline-block;background:#F0EBE4;border:1.5px solid #DDD8CF;border-radius:20px;padding:4px 14px;font-size:.82rem;margin:3px;">${b}</span>`).join('')}</p>
+      <div class="meta-row">${meta}</div>
+      ${u.quote?`<div class="big-q"><div class="bq-open">"</div><div class="bq-text">${u.quote}</div><div class="bq-src">— ${u.quoteSrc}</div></div>`:''}
+      <div class="warn"><strong>⚠ 안내</strong>이 자료는 ${u.name} 2027학년도 공식 가이드북 원문을 기반으로 정리된 내용입니다. 가이드북에 명시되지 않은 내용은 포함하지 않았습니다. 최신 전형 세부사항은 각 대학 입학처 공식 홈페이지와 수시 모집요강을 반드시 확인하세요.</div>
+    `;
+  }
+  else if(tabId==='eval'){
+    // forms: [{name, bars:[{l,p}]}] or no bars
+    let content = '';
+    if(!u.forms || u.forms.length===0){
+      content = `<div class="no-content">이 대학 가이드북에 수치 비율이 명시되어 있지 않습니다.<br>${u.evalNote||''}</div>`;
+    } else {
+      u.forms.forEach(form=>{
+        content += `<div class="eval-wrap" style="margin-bottom:20px;">`;
+        content += `<div class="eval-title">${form.name}</div>`;
+        if(!form.bars || form.bars.length===0){
+          content += `<div style="font-size:.95rem;color:#5A5248;line-height:1.7;padding:8px 0;">${u.evalNote||''}</div>`;
+        } else {
+          form.bars.forEach(e=>{
+            content += `<div class="eval-row"><span class="eval-lbl">${e.l}</span>`;
+            if(e.p>0 && e.p<100){
+              content += `<div class="eval-track"><div class="eval-fill" style="width:${e.p}%"></div></div><span class="eval-pct">${e.p}%</span>`;
+            } else if(e.p===100){
+              content += `<div class="eval-track"><div class="eval-fill" style="width:100%;background:#DDD8CF;"></div></div><span class="eval-pct" style="color:#7A7060;">100%</span>`;
+            } else {
+              content += `<div style="flex:1;"></div><span class="eval-pct"></span>`;
+            }
+            content += `</div>`;
+          });
+          content += `<div class="eval-note">${u.evalNote||''}</div>`;
+        }
+        content += `</div>`;
+      });
+    }
+    html=`
+      <div class="cp-eyebrow">평가 요소 & 비율</div>
+      <h2 class="cp-h2">전형방법 & 평가 비율</h2>
+      ${content}
+      ${u.quote?`<div class="big-q"><div class="bq-open">"</div><div class="bq-text">${u.quote}</div><div class="bq-src">— ${u.quoteSrc}</div></div>`:''}
+    `;
+  }
+  else if(tabId==='talent'){
+    html=`
+      <div class="cp-eyebrow">인재상 & 선발 방향</div>
+      <h2 class="cp-h2">이런 학생을 찾습니다</h2>
+      <div class="talent-list">${u.talent.map((t,i)=>`<div class="t-item"><div class="t-num">${i+1}</div><div>${t}</div></div>`).join('')}</div>
+    `;
+  }
+  else if(tabId==='check'){
+    let content=u.checks.map(c=>`
+      <div class="cl-group">
+        <div class="cl-title">${c.g}</div>
+        ${c.items.map(it=>`<div class="cl-item"><div class="cl-dot">◆</div><div>${it}</div></div>`).join('')}
+      </div>`).join('');
+    html=`
+      <div class="cp-eyebrow">평가 기준 체크리스트</div>
+      <h2 class="cp-h2">사정관이 실제로 확인하는 항목들</h2>
+      ${content||`<div class="no-content">이 대학 가이드북에서 체크리스트 항목이 확인되지 않았습니다.</div>`}
+    `;
+  }
+  else if(tabId==='orig'){
+    let qs=(u.orig||[]).map(q=>`<div class="orig-q"><div class="oq-lbl">${q.label}</div><div class="oq-text">${q.text}</div></div>`).join('');
+    html=`
+      <div class="cp-eyebrow">가이드북 원문</div>
+      <h2 class="cp-h2">가이드북에서 직접 발췌한 원문</h2>
+      ${qs||`<div class="no-content">이 대학 가이드북에서 별도로 인용할 원문이 추출되지 않았습니다.</div>`}
+    `;
+  }
+  else if(tabId==='cases'){
+    let good=(u.good||[]).map(c=>`<div class="case-c good"><span class="case-typ">✅ 긍정</span><div class="case-tit">${c.t}</div><div class="case-body">${c.b}</div><div class="case-src">출처: ${c.src}</div></div>`).join('');
+    let bad=(u.bad||[]).map(c=>`<div class="case-c bad"><span class="case-typ">⚠️ 주의</span><div class="case-tit">${c.t}</div><div class="case-body">${c.b}</div><div class="case-src">출처: ${c.src}</div></div>`).join('');
+    html=`
+      <div class="cp-eyebrow">긍정 · 주의 사례</div>
+      <h2 class="cp-h2">입학사정관이 좋게 보는 경우 / 주의해야 할 경우</h2>
+      <div class="cases-wrap">${good}${bad||''}</div>
+      ${(!good&&!bad)?`<div class="no-content">이 대학 가이드북에서 구체적인 사례가 추출되지 않았습니다.</div>`:''}
+    `;
+  }
+  else if(tabId==='faq'){
+    let faq=(u.faq||[]).map(f=>`
+      <div class="faq-item">
+        <button class="faq-q" onclick="tFaq(this)">${f.q}<span class="faq-arr">▼</span></button>
+        <div class="faq-a">${f.a}${f.hl?`<div class="faq-hl">${f.hl}</div>`:''}</div>
+      </div>`).join('');
+    html=`
+      <div class="cp-eyebrow">상담 Q&A</div>
+      <h2 class="cp-h2">가이드북 기반 자주 묻는 질문</h2>
+      ${faq||`<div class="no-content">이 대학 가이드북에서 Q&A 항목이 확인되지 않았습니다.</div>`}
+    `;
+  }
+
+  rp.innerHTML=`<div class="cp active">${html}</div>`;
+  rp.scrollTop=0;
+}
+
+function goCover(){
+  document.getElementById('detail').style.display='none';
+  document.getElementById('cover').style.display='block';
+}
+function prevUni(){if(CUR>0)open(CUR-1,CUR_TAB);}
+function nextUni(){if(CUR<UNI.length-1)open(CUR+1,CUR_TAB);}
+function tFaq(btn){btn.parentElement.classList.toggle('open');}
+</script>
+</body>
+</html>
